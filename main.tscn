@@ -1,0 +1,55 @@
+[gd_scene load_steps=13 format=3 uid="uid://c6ng0u1sf62e"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_6k6kg"]
+[ext_resource type="PackedScene" uid="uid://c63mdihly55vy" path="res://characters/player.tscn" id="1_pkhnr"]
+[ext_resource type="PackedScene" path="res://terrain/floor.tscn" id="2_dw5tb"]
+[ext_resource type="PackedScene" path="res://objects/tower.tscn" id="3_nn8kp"]
+[ext_resource type="PackedScene" path="res://objects/crate.tscn" id="4_eqpg4"]
+[ext_resource type="PackedScene" uid="uid://4teyumuxs5tr" path="res://characters/villager.tscn" id="5_wacdo"]
+[ext_resource type="PackedScene" path="res://objects/wall.tscn" id="6_qsskx"]
+[ext_resource type="PackedScene" path="res://objects/overhang.tscn" id="7_nj1vp"]
+[ext_resource type="PackedScene" path="res://objects/structure.tscn" id="8_abf0e"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_e240l"]
+
+[sub_resource type="Sky" id="Sky_lsb3y"]
+sky_material = SubResource("ProceduralSkyMaterial_e240l")
+
+[sub_resource type="Environment" id="Environment_8bleq"]
+background_mode = 2
+sky = SubResource("Sky_lsb3y")
+
+[node name="game" type="Node3D" node_paths=PackedStringArray("active_player")]
+script = ExtResource("1_6k6kg")
+active_player = NodePath("player")
+
+[node name="sky" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_8bleq")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="sky"]
+transform = Transform3D(1, 0, 0, 0, -0.0141541, 0.9999, 0, -0.9999, -0.0141541, 0, 2.6596, 0)
+
+[node name="player" parent="." instance=ExtResource("1_pkhnr")]
+
+[node name="villager" parent="." instance=ExtResource("5_wacdo")]
+
+[node name="floor" parent="." instance=ExtResource("2_dw5tb")]
+
+[node name="tower" parent="." instance=ExtResource("3_nn8kp")]
+
+[node name="crate" parent="." instance=ExtResource("4_eqpg4")]
+
+[node name="wall" parent="." instance=ExtResource("6_qsskx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
+
+[node name="overhang" parent="." instance=ExtResource("7_nj1vp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+
+[node name="structure" parent="." instance=ExtResource("8_abf0e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 2)
+
+[node name="wall12" parent="." instance=ExtResource("6_qsskx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 3)
+
+[node name="overhang2" parent="." instance=ExtResource("7_nj1vp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 3)

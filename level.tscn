@@ -1,0 +1,26 @@
+[gd_scene load_steps=7 format=3 uid="uid://c7b626dbx127w"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_ao17m"]
+[ext_resource type="PackedScene" uid="uid://c63mdihly55vy" path="res://characters/player.tscn" id="1_vpnpv"]
+[ext_resource type="PackedScene" uid="uid://c7c3bpcwdcmcb" path="res://terrain/curved_canyon.tscn" id="2_817lb"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_30lhe"]
+
+[sub_resource type="Sky" id="Sky_qlfbh"]
+sky_material = SubResource("ProceduralSkyMaterial_30lhe")
+
+[sub_resource type="Environment" id="Environment_nuxfj"]
+background_mode = 2
+sky = SubResource("Sky_qlfbh")
+
+[node name="level" type="Node3D" node_paths=PackedStringArray("active_player")]
+script = ExtResource("1_ao17m")
+active_player = NodePath("player")
+
+[node name="curved_canyon" parent="." instance=ExtResource("2_817lb")]
+
+[node name="player" parent="." instance=ExtResource("1_vpnpv")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0.911381, 2, 2.08165e-12)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_nuxfj")
