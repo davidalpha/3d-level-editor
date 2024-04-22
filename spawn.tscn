@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://sgndgf72llc1"]
+
+[ext_resource type="Script" path="res://spawn.gd" id="1_gkvar"]
+[ext_resource type="Texture2D" uid="uid://5jluwa85wqu8" path="res://icon.svg" id="1_iqjq0"]
+[ext_resource type="PackedScene" uid="uid://ddv4e50a26hnq" path="res://compositon_scenes/animated.tscn" id="2_41x7p"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d7ele"]
+size = Vector3(1, 2, 1)
+
+[node name="spawn" type="Area3D" groups=["spawns"]]
+script = ExtResource("1_gkvar")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_d7ele")
+
+[node name="Sprite3D" type="Sprite3D" parent="CollisionShape3D"]
+texture = ExtResource("1_iqjq0")
+
+[node name="animated" parent="CollisionShape3D/Sprite3D" instance=ExtResource("2_41x7p")]
+y_bounce_amplitude = 0.5
+y_bounce_frequency = 2.0

@@ -1,11 +1,19 @@
 extends Node3D
 
-@export var active_player: Node
+var player_scene = load("res://characters/player.tscn")
+var player: Node
+
+@export var floor_height = 0
+@export var start_spawn: Node
+var current_spawn: Node
 
 # this script handles general input and is used for level configuration settings
 
 func _ready():
-	pass # Replace with function body.
+	current_spawn = start_spawn
+	player = player_scene.instantiate()
+	player.position = current_spawn.position
+	add_child(player)
 
 
 func _process(delta):
@@ -13,4 +21,10 @@ func _process(delta):
 		Input.MOUSE_MODE_VISIBLE
 	
 	if Input.is_action_just_released("toggle camera view"):
-		active_player.toggle_camera_view()
+		player.toggle_camera_view()
+
+func player_died():
+	player.queue_free()
+	player = player_scene.instantiate()
+	player.position = current_spawn.position
+	add_child(player)

@@ -1,5 +1,6 @@
 extends CharacterBody3D
 
+@onready var game = get_node("/root/game/")
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
@@ -13,6 +14,9 @@ func _ready():
 	$CameraPivot1P/Camera3D.current = true
 
 func _physics_process(delta):
+	
+	if self.position.y < (game.floor_height -2):
+		game.player_died()
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -58,3 +62,7 @@ func toggle_camera_view():
 		$CameraPivot1P/Camera3D.current = !$CameraPivot1P/Camera3D.current
 		return
 
+
+func _on_area_3d_area_entered(area):
+	if area.is_in_group("spawns"):
+		game.current_spawn = area
