@@ -16,6 +16,7 @@ func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
+		velocity.x = velocity.x/2
 
 	# Handle Jump.
 	if Input.is_action_just_pressed("player_jump") and is_on_floor():
