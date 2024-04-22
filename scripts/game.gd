@@ -1,5 +1,6 @@
 extends Node3D
 
+var collectables: Dictionary
 var player_scene = load("res://characters/player.tscn")
 var player: Node
 
@@ -28,3 +29,9 @@ func player_died():
 	player = player_scene.instantiate()
 	player.position = current_spawn.position
 	add_child(player)
+
+func add_collectable(type):
+	if collectables.find_key(str(type)):
+		collectables[type] += 1
+	else:
+		collectables = {type: 1}

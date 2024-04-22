@@ -1,8 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://c7b626dbx127w"]
+[gd_scene load_steps=13 format=3 uid="uid://c7b626dbx127w"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_fvee3"]
 [ext_resource type="PackedScene" uid="uid://c7c3bpcwdcmcb" path="res://terrain/curved_canyon.tscn" id="2_2aex3"]
-[ext_resource type="PackedScene" uid="uid://sgndgf72llc1" path="res://spawn.tscn" id="4_8x3up"]
+[ext_resource type="PackedScene" uid="uid://c5ji0kvr80qy2" path="res://objects/collectable.tscn" id="4_4vqhy"]
+[ext_resource type="PackedScene" uid="uid://sgndgf72llc1" path="res://objects/spawn.tscn" id="4_8x3up"]
+[ext_resource type="Script" path="res://collectable_counter.gd" id="5_ckcpg"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_30lhe"]
 
@@ -69,3 +71,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 2, 11)
 
 [node name="mid_spawn" parent="." instance=ExtResource("4_8x3up")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2, 6)
+
+[node name="collectable_prism" parent="." instance=ExtResource("4_4vqhy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 11)
+
+[node name="collectable_counter" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("5_ckcpg")

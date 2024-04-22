@@ -40,3 +40,4 @@ shape = SubResource("CapsuleShape3D_mghgg")
 mesh = SubResource("CapsuleMesh_tac3y")
 
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
