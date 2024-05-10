@@ -20,7 +20,7 @@ func _ready():
 
 func _process(delta):
 	if Input.is_action_just_released("toggle interact with ui"):
-		Input.MOUSE_MODE_VISIBLE
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
 	if Input.is_action_just_released("toggle camera view"):
 		player.toggle_camera_view()

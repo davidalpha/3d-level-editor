@@ -81,4 +81,4 @@ func _on_area_3d_area_entered(area):
 	if area.is_in_group("collectables"):
 		game.add_collectable(area.type)
 		area.queue_free()
-		print("yeah")
+

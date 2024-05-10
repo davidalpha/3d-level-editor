@@ -1,7 +1,6 @@
 extends Label
 
-@onready var game = get_node("/root/game/")
-var counters: String
+var time: float
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -10,6 +9,10 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	for collectable in game.collectables:
-		counters = str(collectable) + ": " + str(game.collectables[collectable])
-		text = counters
+	time += delta
+	var secs = fmod(time,60)
+	var mins = fmod(time,60*60) / 60
+	
+	var time_passed = "%02d : %02d" % [mins,secs]
+	
+	text = time_passed

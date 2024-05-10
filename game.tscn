@@ -1,7 +1,8 @@
-[gd_scene load_steps=29 format=3 uid="uid://c7b626dbx127w"]
+[gd_scene load_steps=34 format=3 uid="uid://c7b626dbx127w"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_fvee3"]
 [ext_resource type="PackedScene" uid="uid://c7c3bpcwdcmcb" path="res://terrain/curved_canyon.tscn" id="2_2aex3"]
+[ext_resource type="Script" path="res://scripts/ui_timer.gd" id="3_tmmj8"]
 [ext_resource type="PackedScene" uid="uid://c5ji0kvr80qy2" path="res://objects/collectable.tscn" id="4_4vqhy"]
 [ext_resource type="PackedScene" uid="uid://sgndgf72llc1" path="res://objects/spawn.tscn" id="4_8x3up"]
 [ext_resource type="Script" path="res://collectable_counter.gd" id="5_ckcpg"]
@@ -86,12 +87,32 @@ albedo_texture = ExtResource("7_3qxtp")
 material = SubResource("StandardMaterial3D_xl4bm")
 size = Vector2(200, 200)
 
+[sub_resource type="Curve3D" id="Curve3D_cpm44"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 5.75, 0, 0, 1.075, 0, 0, -1.075, 0, 0, 2.75, 0, 0, 0, -2, 0, 0, 2, 0, 0.623204, 2.39937, 0, -1, 0, 0, 1, 0, 0, 2.71195, 4.22965, 0, 0, 0, 0, 0, 0, 0, 5.75, 4.25, 0, 0, 0, 0, 0, 0, 0, 5.75, 0),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0)
+}
+point_count = 6
+
 [sub_resource type="Curve3D" id="Curve3D_34341"]
 _data = {
 "points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 5.75, 0, 0, 1, -1.25, 0, -1, 1.25, 0, 2.75, 0, 0, 0, -0.75, 0, 0, 0.75, 0, 2.75, 3.5),
 "tilts": PackedFloat32Array(0, 0, 0)
 }
 point_count = 3
+
+[sub_resource type="Curve3D" id="Curve3D_s5nj5"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 5.75, 0, 0, 1, -1.25, 0, -1, 1.25, 0, 2.75, 0, 0, 0, -0.75, 0, 0, 0.75, 0, 2.75, 3.5),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="BoxMesh" id="BoxMesh_umqnv"]
+size = Vector3(3, 1, 40)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_lo7no"]
+data = PackedVector3Array(-1.5, 0.5, 20, 1.5, 0.5, 20, -1.5, -0.5, 20, 1.5, 0.5, 20, 1.5, -0.5, 20, -1.5, -0.5, 20, 1.5, 0.5, -20, -1.5, 0.5, -20, 1.5, -0.5, -20, -1.5, 0.5, -20, -1.5, -0.5, -20, 1.5, -0.5, -20, 1.5, 0.5, 20, 1.5, 0.5, -20, 1.5, -0.5, 20, 1.5, 0.5, -20, 1.5, -0.5, -20, 1.5, -0.5, 20, -1.5, 0.5, -20, -1.5, 0.5, 20, -1.5, -0.5, -20, -1.5, 0.5, 20, -1.5, -0.5, 20, -1.5, -0.5, -20, 1.5, 0.5, 20, -1.5, 0.5, 20, 1.5, 0.5, -20, -1.5, 0.5, 20, -1.5, 0.5, -20, 1.5, 0.5, -20, -1.5, -0.5, 20, 1.5, -0.5, 20, -1.5, -0.5, -20, 1.5, -0.5, 20, 1.5, -0.5, -20, -1.5, -0.5, -20)
 
 [node name="game" type="Node3D" node_paths=PackedStringArray("start_spawn")]
 script = ExtResource("1_fvee3")
@@ -100,10 +121,24 @@ start_spawn = NodePath("terrain/starting_platform/start_spawn")
 [node name="sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.707107, 0.707107, 0, -0.707107, -0.707107, 0, 16, 0)
 
-[node name="collectable_counter" type="Label" parent="."]
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
 offset_right = 40.0
-offset_bottom = 23.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="collectable_counter" type="Label" parent="UI/HBoxContainer"]
+layout_mode = 2
 script = ExtResource("5_ckcpg")
+
+[node name="timer" type="Label" parent="UI/HBoxContainer"]
+layout_mode = 2
+script = ExtResource("3_tmmj8")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_nuxfj")
@@ -215,17 +250,38 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 mesh = SubResource("PlaneMesh_ljfk5")
 
 [node name="moving_platform" parent="." instance=ExtResource("10_2ucq3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0.5, 14)
-speed = 1.0
-pauseTimeAtWaypoints = 0.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 27.25)
+curve = SubResource("Curve3D_cpm44")
+speed = 2.0
+pauseTimeAtWaypoints = 1.0
+jumpToStart = true
+easingToPoints = true
 
 [node name="moving_platform2" parent="." instance=ExtResource("10_2ucq3")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.75, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 19.5)
 curve = SubResource("Curve3D_34341")
 speed = 2.0
 pauseTimeAtWaypoints = 1.0
 jumpToStart = true
 easingToPoints = true
 
+[node name="moving_platform4" parent="." instance=ExtResource("10_2ucq3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 35.25)
+curve = SubResource("Curve3D_s5nj5")
+speed = 2.0
+pauseTimeAtWaypoints = 0.0
+
 [node name="moving_platform3" parent="." instance=ExtResource("10_2ucq3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.25, 4.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 41.5)
+pauseTimeAtWaypoints = 0.5
+jumpToStart = true
+
+[node name="pier" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.25, -1, 37.75)
+mesh = SubResource("BoxMesh_umqnv")
+skeleton = NodePath("../terrain/floor")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="pier"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="pier/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_lo7no")
