@@ -1,23 +1,83 @@
-[gd_scene load_steps=5 format=3 uid="uid://sgndgf72llc1"]
+[gd_scene load_steps=12 format=3 uid="uid://sgndgf72llc1"]
 
-[ext_resource type="Script" path="res://scripts/spawn.gd" id="1_gkvar"]
-[ext_resource type="Texture2D" uid="uid://5jluwa85wqu8" path="res://icon.svg" id="1_iqjq0"]
-[ext_resource type="PackedScene" uid="uid://ddv4e50a26hnq" path="res://compositon_scenes/animated.tscn" id="2_41x7p"]
+[ext_resource type="Texture2D" uid="uid://dethyqtoyn1am" path="res://assets/textures/spawn_icon.png" id="3_v03px"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_d7ele"]
 size = Vector3(1, 2, 1)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_gq7nv"]
+atlas = ExtResource("3_v03px")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lxs6x"]
+atlas = ExtResource("3_v03px")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vhknt"]
+atlas = ExtResource("3_v03px")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d4bh7"]
+atlas = ExtResource("3_v03px")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hdgdh"]
+atlas = ExtResource("3_v03px")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7akg1"]
+atlas = ExtResource("3_v03px")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dhbxc"]
+atlas = ExtResource("3_v03px")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ndm74"]
+atlas = ExtResource("3_v03px")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0e5xg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gq7nv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lxs6x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vhknt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d4bh7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hdgdh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7akg1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dhbxc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ndm74")
+}],
+"loop": true,
+"name": &"spin",
+"speed": 5.0
+}]
+
 [node name="spawn" type="Area3D" groups=["spawns"]]
-script = ExtResource("1_gkvar")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_d7ele")
 
-[node name="Sprite3D" type="Sprite3D" parent="CollisionShape3D"]
-texture = ExtResource("1_iqjq0")
-
-[node name="animated" parent="CollisionShape3D/Sprite3D" instance=ExtResource("2_41x7p")]
-spinning = true
-bouncing = true
-y_bounce_amplitude = 0.5
-y_bounce_frequency = 2.0
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+billboard = 1
+double_sided = false
+sprite_frames = SubResource("SpriteFrames_0e5xg")
+animation = &"spin"
+autoplay = "spin"
+frame_progress = 0.258224

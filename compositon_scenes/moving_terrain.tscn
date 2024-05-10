@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dx1eoo3ugue1c"]
+
+[ext_resource type="Script" path="res://scripts/moving_terrain.gd" id="1_xxfnv"]
+
+[node name="moving_terrain" type="Node"]
+script = ExtResource("1_xxfnv")

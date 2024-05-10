@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://closbnks0qacq"]
+
+[ext_resource type="Script" path="res://scripts/move_and_stop_platform.gd" id="1_igqh5"]
+
+[sub_resource type="Curve3D" id="Curve3D_f4tpi"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 5.75, 0, 0, 1.075, 0, 0, -1.075, 0, 0, 2.75, 0, 0, 0, -2, 0, 0, 2, 0, 0.623204, 2.39937, 0, -1, 0, 0, 1, 0, 0, 2.71195, 4.22965, 0, 0, 0, 0, 0, 0, 0, 5.75, 4.25, 0, 0, 0, 0, 0, 0, 0, 5.75, 0),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0)
+}
+point_count = 6
+
+[sub_resource type="BoxMesh" id="BoxMesh_nf0vv"]
+size = Vector3(2, 0.2, 2)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ms0fu"]
+data = PackedVector3Array(-1, 0.125, 1, 1, 0.125, 1, -1, -0.125, 1, 1, 0.125, 1, 1, -0.125, 1, -1, -0.125, 1, 1, 0.125, -1, -1, 0.125, -1, 1, -0.125, -1, -1, 0.125, -1, -1, -0.125, -1, 1, -0.125, -1, 1, 0.125, 1, 1, 0.125, -1, 1, -0.125, 1, 1, 0.125, -1, 1, -0.125, -1, 1, -0.125, 1, -1, 0.125, -1, -1, 0.125, 1, -1, -0.125, -1, -1, 0.125, 1, -1, -0.125, 1, -1, -0.125, -1, 1, 0.125, 1, -1, 0.125, 1, 1, 0.125, -1, -1, 0.125, 1, -1, 0.125, -1, 1, 0.125, -1, -1, -0.125, 1, 1, -0.125, 1, -1, -0.125, -1, 1, -0.125, 1, 1, -0.125, -1, -1, -0.125, -1)
+
+[node name="moving_platform" type="Path3D"]
+curve = SubResource("Curve3D_f4tpi")
+script = ExtResource("1_igqh5")
+speed = 5.0
+pauseTimeAtWaypoints = 3.0
+
+[node name="PathFollow3D" type="PathFollow3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.75, 0)
+rotation_mode = 0
+loop = false
+tilt_enabled = false
+
+[node name="AnimatableBody3D" type="AnimatableBody3D" parent="PathFollow3D"]
+sync_to_physics = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PathFollow3D/AnimatableBody3D"]
+mesh = SubResource("BoxMesh_nf0vv")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PathFollow3D/AnimatableBody3D"]
+shape = SubResource("ConcavePolygonShape3D_ms0fu")

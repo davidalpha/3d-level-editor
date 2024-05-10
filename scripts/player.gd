@@ -22,13 +22,24 @@ func _physics_process(delta):
 		velocity.y -= gravity * delta
 		var input_dir = Input.get_vector("player_left", "player_right", "player_up", "player_down")
 		var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+
 		if direction:
 			velocity.x = direction.x * SPEED/2
-			velocity.z = direction.z * SPEED/2
-
+			velocity.z = direction.z * SPEED/2	
+		
 	# Handle Jump.
 	if Input.is_action_just_pressed("player_jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+
+	# handle walljump	
+	if Input.is_action_just_pressed("player_jump") and is_on_wall():
+			#velocity.y = JUMP_VELOCITY
+			var collider = get_last_slide_collision()
+			var collider_normal = collider.get_normal()
+			print(collider_normal)
+			velocity.x = collider_normal.x*SPEED
+			velocity.z = collider_normal.z*SPEED
+			velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -41,7 +52,7 @@ func _physics_process(delta):
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 			velocity.z = move_toward(velocity.z, 0, SPEED)
-
+			
 	move_and_slide()
 
 func _input(event):

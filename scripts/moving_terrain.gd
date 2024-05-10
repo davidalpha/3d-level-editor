@@ -1,6 +1,5 @@
-extends Area3D
+extends Node
 
-const type: String = "prism"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

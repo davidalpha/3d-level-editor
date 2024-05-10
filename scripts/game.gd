@@ -8,12 +8,13 @@ var player: Node
 @export var start_spawn: Node
 var current_spawn: Node
 
+var win_condition: Dictionary
 # this script handles general input and is used for level configuration settings
 
 func _ready():
 	current_spawn = start_spawn
 	player = player_scene.instantiate()
-	player.position = current_spawn.position
+	player.position = current_spawn.global_transform.origin
 	add_child(player)
 
 
@@ -27,11 +28,14 @@ func _process(delta):
 func player_died():
 	player.queue_free()
 	player = player_scene.instantiate()
-	player.position = current_spawn.position
+	player.position = current_spawn.global_transform.origin
 	add_child(player)
 
 func add_collectable(type):
-	if collectables.find_key(str(type)):
+	if collectables.has(str(type)):
 		collectables[type] += 1
 	else:
 		collectables = {type: 1}
+
+func win():
+	pass
